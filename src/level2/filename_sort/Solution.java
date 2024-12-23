@@ -1,6 +1,7 @@
 package level2.filename_sort;
 
 public class Solution {
+    //처음 삽입정렬 사용시 순서 변경되는 문제 발생 -> 버블정렬 사용해서 해결
     public static String[] solution(String[] files) {
         String[] answer = new String[files.length];
         String[] head = new String[files.length];
@@ -19,35 +20,38 @@ public class Solution {
 
         //정렬하면 됨 -> 파일 개수가 1000개 이하이므로 n^2이여도 1000000번
         for (int i = 0; i < files.length; i++) {
-            for (int j = i + 1; j < files.length; j++) {
-                if (head[i].compareToIgnoreCase(head[j]) > 0){
-                    String temp = head[i];
-                    head[i] = head[j];
-                    head[j] = temp;
+            for (int j = 0; j < files.length - 1; j++) {
+                if (head[j].compareToIgnoreCase(head[j + 1]) > 0){
+                    String temp = head[j];
+                    head[j] = head[j + 1];
+                    head[j + 1] = temp;
 
-                    temp = number[i];
-                    number[i] = number[j];
-                    number[j] = temp;
+                    temp = number[j];
+                    number[j] = number[j + 1];
+                    number[j + 1] = temp;
 
-                    temp = tail[i];
-                    tail[i] = tail[j];
-                    tail[j] = temp;
-                } else if (head[i].compareToIgnoreCase(head[j]) == 0) {
-                    if (Integer.parseInt(number[i]) > Integer.parseInt(number[j])) {
-                        String temp = head[i];
-                        head[i] = head[j];
-                        head[j] = temp;
+                    temp = tail[j];
+                    tail[j] = tail[j + 1];
+                    tail[j + 1] = temp;
+                } else if (head[j].compareToIgnoreCase(head[j + 1]) == 0) {
+                    if (Integer.parseInt(number[j]) > Integer.parseInt(number[j + 1])) {
+                        String temp = head[j];
+                        head[j] = head[j + 1];
+                        head[j + 1] = temp;
 
-                        temp = number[i];
-                        number[i] = number[j];
-                        number[j] = temp;
+                        temp = number[j];
+                        number[j] = number[j + 1];
+                        number[j + 1] = temp;
 
-                        temp = tail[i];
-                        tail[i] = tail[j];
-                        tail[j] = temp;
+                        temp = tail[j];
+                        tail[j] = tail[j + 1];
+                        tail[j + 1] = temp;
                     }
                 }
             }
+        }
+
+        for (int i = 0; i < files.length; i++) {
             answer[i] = head[i] + number[i] + tail[i];
         }
 
@@ -91,11 +95,6 @@ public class Solution {
     }
 
     private static boolean isInt(char value) {
-        try {
-            Integer.parseInt(String.valueOf(value));
-            return true;
-        } catch (NumberFormatException e) {
-            return false;
-        }
+        return value >= '0' && value <= '9';
     }
 }
