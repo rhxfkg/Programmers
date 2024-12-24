@@ -14,7 +14,10 @@ public class Solution {
             numbersStr.add(Integer.toString(number));
         }
         Collections.sort(numbersStr, (x, y) -> (y + x).compareTo(x + y));
-
+        //정렬 후 0밖에 없는 경우 추가해서 해결
+        if (numbersStr.get(0).equals("0")) {
+            return "0";
+        }
         for (String s : numbersStr) {
             answer += s;
         }
