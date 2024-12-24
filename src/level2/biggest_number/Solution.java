@@ -1,6 +1,7 @@
 package level2.biggest_number;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Solution {
@@ -12,16 +13,8 @@ public class Solution {
         for (int number : numbers) {
             numbersStr.add(Integer.toString(number));
         }
-        for (int i = 0; i < numbersStr.size(); i++) {
-            for (int j = i + 1; j < numbersStr.size(); j++) {
-                String x = numbersStr.get(i);
-                String y = numbersStr.get(j);
-                if ((x + y).compareTo(y + x) < 0) {
-                    numbersStr.set(i, y);
-                    numbersStr.set(j, x);
-                }
-            }
-        }
+        Collections.sort(numbersStr, (x, y) -> (y + x).compareTo(x + y));
+
         for (String s : numbersStr) {
             answer += s;
         }
